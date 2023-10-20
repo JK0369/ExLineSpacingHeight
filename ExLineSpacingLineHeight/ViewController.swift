@@ -12,11 +12,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         let label = UILabel()
-        label.textAlignment = .center
-        label.center = view.center
         label.numberOfLines = 0
         label.backgroundColor = .lightGray
         label.textColor = .black
+//        label.text = "ABC\n123\ndef"
         view.addSubview(label)
         
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -26,8 +25,9 @@ class ViewController: UIViewController {
             label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
         ])
         
-        sampleLineSpacing(with: label)
+//        sampleLineSpacing(with: label)
 //        sampleLineHeight(with: label)
+        sampleIntervalLine(with: label)
     }
     
     func sampleLineSpacing(with label: UILabel) {
@@ -54,6 +54,7 @@ class ViewController: UIViewController {
         let paragraphStyle_a = NSMutableParagraphStyle()
         paragraphStyle_a.lineSpacing = 100
         attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle_a, range: range_a)
+        paragraphStyleA.lineHeightMultiple = 2
         
         label.attributedText = attributedString
     }
@@ -74,5 +75,22 @@ class ViewController: UIViewController {
         attributedString.addAttribute(NSAttributedString.Key.baselineOffset, value: 15, range: rangeC)
         
         label.attributedText = attributedString
+    }
+    
+    func sampleIntervalLine(with label: UILabel) {
+        let text = "ABC\n123\ndef"
+        let attributedText = NSMutableAttributedString(string: text)
+
+        let abcRange = (text as NSString).range(of: "ABC")
+        let paragraphStyle1 = NSMutableParagraphStyle()
+        paragraphStyle1.lineSpacing = 10
+        attributedText.addAttribute(.paragraphStyle, value: paragraphStyle1, range: abcRange)
+
+        let line123DefRange = (text as NSString).range(of: "123")
+        let paragraphStyle2 = NSMutableParagraphStyle()
+        paragraphStyle2.lineSpacing = 30
+        attributedText.addAttribute(.paragraphStyle, value: paragraphStyle2, range: line123DefRange)
+        
+        label.attributedText = attributedText
     }
 }
